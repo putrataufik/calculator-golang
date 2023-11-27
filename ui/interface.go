@@ -57,21 +57,20 @@ func getUserInput(prompt string) (float64, error) {
 	if err != nil {
 		return 0, errors.New("invalid number")
 	}
-
 	return num, nil
 }
 
 // ini function untuk input simbol matek (+ , -, /, *)
 func getOperationInput() (string, error) {
 	var operation string
-	fmt.Print("Enter the operation (+, -, *, /): ")
+	fmt.Print("Enter the operation (+, -, *, /, ^): ")
 	_, err := fmt.Scanln(&operation)
 	if err != nil {
 		return "", err
 	}
 
 	switch operation {
-	case "+", "-", "*", "/":
+	case "+", "-", "*", "/", "^":
 		return operation, nil
 	default:
 		return "", errors.New("unsupported operation")
@@ -89,6 +88,14 @@ func performOperation(num1, num2 float64, operation string) (float64, error) {
 		return calculator.Multiply(num1, num2), nil
 	case "/":
 		return calculator.Divide(num1, num2)
+	case "^":
+
+		result, err := calculator.Power(float64(num1), float64(num2))
+		if err != nil {
+			return 0, err
+		}
+		return result, nil
+
 	default:
 		return 0, errors.New("unsupported operation")
 	}
